@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser")
 
 router.get('/', (req, res) => {
     console.log(req.cookies)
-    fetch(process.env.API_URL+"/budget/expenses", {
+    fetch(process.env.BASE_API_URL+"/budget/expenses", {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
