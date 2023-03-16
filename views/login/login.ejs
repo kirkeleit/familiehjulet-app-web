@@ -17,7 +17,7 @@
                 console.log("Logged inn!")
                 window.location.href = "https://localhost:5000/"
             } else if (localStorage.getItem("LOGIN_TOKEN") != null) {
-                document.getElementById("LoginButton").innerHTML = "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>Logger på..."
+                document.getElementById("LoginButton").innerHTML = "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> Logger på..."
                 document.getElementById("LoginButton").disabled = true
                 fetch(BASE_API_URL+"/users/login_check/", {
                     method: 'post',
@@ -26,18 +26,15 @@
                     },
                     body: JSON.stringify({ LoginToken: localStorage.getItem('LOGIN_TOKEN') })
                 })
-                .then((response) => {
-                    if (response.status != 200) {
-                        throw new Error("Not logged in yet.")
-                    }
-                    return response.json()
-                })
+                .then((response) => response.json())
                 .then((data) => {
                     console.log(data)
-                    localStorage.removeItem("LOGIN_TOKEN")
-                    localStorage.setItem("ACCESS_TOKEN", data.AccessToken)
-                    localStorage.setItem("REFRESH_TOKEN", data.RefreshToken)
-                    window.location.href = "http://localhost:5000/"
+                    if (data.AccessToken !== undefined) {
+                        localStorage.removeItem("LOGIN_TOKEN")
+                        localStorage.setItem("ACCESS_TOKEN", data.AccessToken)
+                        localStorage.setItem("REFRESH_TOKEN", data.RefreshToken)
+                        window.location.href = "http://localhost:5000/"
+                    }
                 });
             } else {
                 console.log("No login attempt yet.")
