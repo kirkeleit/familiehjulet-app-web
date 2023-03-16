@@ -4,6 +4,8 @@ BASE_API_URL="http://localhost:3000"
 
 function Authenticate(UserEmailAddress) {
     console.log("Starting authentication process for "+UserEmailAddress+"...")
+    document.getElementById("LoginButton").innerHTML = "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> Logger på..."
+    document.getElementById("LoginButton").disabled = true
     fetch(BASE_API_URL+"/users/login/", {
         method: 'post',
         headers: {
